@@ -1,0 +1,82 @@
+-- DROP SCHEMA dbo;
+
+CREATE SCHEMA dbo;
+-- PaintStore.dbo.Customer definition
+
+-- Drop table
+
+-- DROP TABLE PaintStore.dbo.Customer;
+
+CREATE TABLE PaintStore.dbo.Customer (
+	CustomerID int NOT NULL,
+	FirstName varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	LastName varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Email varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Phone varchar(20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Address varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT PK__Customer__A4AE64B87E822C9D PRIMARY KEY (CustomerID)
+);
+
+
+-- PaintStore.dbo.Product definition
+
+-- Drop table
+
+-- DROP TABLE PaintStore.dbo.Product;
+
+CREATE TABLE PaintStore.dbo.Product (
+	ProductID int NOT NULL,
+	ProductName varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Description varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Price decimal(10,2) NULL,
+	CONSTRAINT PK__Product__B40CC6ED0A3166AD PRIMARY KEY (ProductID)
+);
+
+
+-- PaintStore.dbo.Store definition
+
+-- Drop table
+
+-- DROP TABLE PaintStore.dbo.Store;
+
+CREATE TABLE PaintStore.dbo.Store (
+	StoreID int NOT NULL,
+	StoreName varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	City varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Address varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Phone varchar(20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	Email varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT PK__Store__3B82F0E1B3138A7D PRIMARY KEY (StoreID)
+);
+
+
+-- PaintStore.dbo.[Order] definition
+
+-- Drop table
+
+-- DROP TABLE PaintStore.dbo.[Order];
+
+CREATE TABLE PaintStore.dbo.[Order] (
+	OrderID int NOT NULL,
+	OrderDate date NULL,
+	CustomerID int NULL,
+	StoreID int NULL,
+	CONSTRAINT PK__Order__C3905BAF1F4DD7B6 PRIMARY KEY (OrderID),
+	CONSTRAINT FK__Order__CustomerI__2D27B809 FOREIGN KEY (CustomerID) REFERENCES PaintStore.dbo.Customer(CustomerID),
+	CONSTRAINT FK__Order__StoreID__2E1BDC42 FOREIGN KEY (StoreID) REFERENCES PaintStore.dbo.Store(StoreID)
+);
+
+
+-- PaintStore.dbo.Store_Product definition
+
+-- Drop table
+
+-- DROP TABLE PaintStore.dbo.Store_Product;
+
+CREATE TABLE PaintStore.dbo.Store_Product (
+	StoreID int NOT NULL,
+	ProductID int NOT NULL,
+	CONSTRAINT PK__Store_Pr__F0C23C8F9C770476 PRIMARY KEY (StoreID,ProductID),
+	CONSTRAINT FK__Store_Pro__Produ__31EC6D26 FOREIGN KEY (ProductID) REFERENCES PaintStore.dbo.Product(ProductID),
+	CONSTRAINT FK__Store_Pro__Store__30F848ED FOREIGN KEY (StoreID) REFERENCES PaintStore.dbo.Store(StoreID)
+);
